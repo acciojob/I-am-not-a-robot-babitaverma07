@@ -1,62 +1,20 @@
-<h3 id="h">Please click on the identical tiles to verify that you are not a robot.</h3>
-<div id="image-container">
-  <!-- images will be rendered here -->
-</div>
-<button id="reset" style="display: none;">Reset</button>
-<button id="verify" style="display: none;">Verify</button>
-<p id="para" style="display: none;"></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Verification</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h3 id="h">Please click on the identical tiles to verify that you are not a robot.</h3>
+    <div id="image-container">
+        <!-- Images will be dynamically inserted here -->
+    </div>
+    <button id="reset" style="display: none;">Reset</button>
+    <button id="verify" style="display: none;">Verify</button>
+    <p id="para"></p>
 
-<script>
-  let images = [];
-  let clickedImages = [];
-  let repeatedImageIndex;
-
-  // generate 6 images, 5 unique and 1 repeated
-  for (let i = 0; i < 6; i++) {
-    let img = document.createElement("img");
-    img.className = `img${i % 5 + 1}`;
-    images.push(img);
-    document.getElementById("image-container").appendChild(img);
-  }
-
-  // randomly arrange images
-  images.forEach((img) => {
-    img.style.order = Math.floor(Math.random() * 6);
-  });
-
-  // choose a random image to repeat
-  repeatedImageIndex = Math.floor(Math.random() * 5);
-  images[5].className = `img${repeatedImageIndex + 1}`;
-
-  // add event listeners to images
-  images.forEach((img) => {
-    img.addEventListener("click", (e) => {
-      if (clickedImages.length < 2) {
-        clickedImages.push(img.className);
-        document.getElementById("reset").style.display = "block";
-        if (clickedImages.length === 2) {
-          document.getElementById("verify").style.display = "block";
-        }
-      }
-    });
-  });
-
-  // add event listener to reset button
-  document.getElementById("reset").addEventListener("click", () => {
-    clickedImages = [];
-    document.getElementById("reset").style.display = "none";
-    document.getElementById("verify").style.display = "none";
-    document.getElementById("para").style.display = "none";
-  });
-
-  // add event listener to verify button
-  document.getElementById("verify").addEventListener("click", () => {
-    if (clickedImages[0] === clickedImages[1]) {
-      document.getElementById("para").innerHTML = "You are a human. Congratulations!";
-    } else {
-      document.getElementById("para").innerHTML = "We can't verify you as a human. You selected the non-identical tiles.";
-    }
-    document.getElementById("para").style.display = "block";
-    document.getElementById("verify").style.display = "none";
-  });
-</script>
+    <script src="script.js"></script>
+</body>
+</html>
